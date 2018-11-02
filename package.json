@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test": "mocha  --opts src/test/mocha.opts --recursive -R list src/test/**/*.{ts,js}",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "npm test && npm run build"
   },
   "devDependencies": {
     "@types/chai": "^4.1.4",

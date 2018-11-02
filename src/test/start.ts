@@ -1,9 +1,12 @@
-import {assert} from 'chai'
+import {withLock} from "../index";
 
-describe('lets do', () => {
+describe('basic use', () => {
 
 
-  it('it', function () {
-    assert.fail('all start here', 'yes!')
+  it('with default withLock', async function () {
+
+    await withLock('lockMe', async () => {
+    })
+
   });
 })

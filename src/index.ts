@@ -3,7 +3,6 @@ import {RedisClient} from "redis";
 import * as redisLock from 'redis-lock'
 import * as redis from "redis";
 
-
 interface unlocker {
   (): void
 }
@@ -28,39 +27,47 @@ export function createLocker(redisClient: any): Locker {
   }
 }
 
-
 const redisClient = redis.createClient()
-
-export const defaultLocker = createLocker(redisClient)
-
 
 export type LockConfig = { key: string, timeOutInMs: number };
 
-export function withLock(key: string, func: () => Promise<any>)
-export function withLock(lockConfig: LockConfig, func: () => Promise<any>)
+export function createLockContext(redisClient: RedisClient) {
 
-export async function withLock(config: string | LockConfig, func: () => Promise<any>, locker: Locker = defaultLocker) {
+  const locker = createLocker(redisClient)
 
-  let key = ''
-  let timeOut = 5000
+  async function withLock(config: string | LockConfig, func: () => Promise<any>) {
 
-  if (typeof config === 'string') {
+    let key = ''
+    let timeOut = 5000
 
-    key = config
-  } else {
-    key = config.key
-    timeOut = config.timeOutInMs
+    if (typeof config === 'string') {
+
+      key = config
+    } else {
+      key = config.key
+      timeOut = config.timeOutInMs
+    }
+
+    const unlock = await locker(key, timeOut)
+
+    try {
+      await func()
+    } catch (e) {
+      console.error(e)
+      throw e
+    }
+    finally {
+      unlock()
+    }
   }
 
-  const unlock = await locker(key, timeOut)
-
-  try {
-    await func()
-  } catch (e) {
-    console.error(e)
-    throw e
-  }
-  finally {
-    unlock()
+  return {
+    locker,
+    withLock
   }
 }
+
+const defaultContext = createLockContext(redisClient)
+
+export const withLock = defaultContext.withLock
+export const defaultLocker = defaultContext.locker
