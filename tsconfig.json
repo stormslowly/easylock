@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "noImplicitAny": false,
+    "sourceMap": false,
+    "outDir": "dist/",
+    "experimentalDecorators": true,
+    "typeRoots": [
+      "typings/",
+      "./node_modules/@types/"
+    ],
+    "moduleResolution": "node",
+    "declaration": true
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
+

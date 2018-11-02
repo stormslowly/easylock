@@ -1,0 +1,26 @@
+dist
+build
+node_modules
+*.swp
+*~
+.idea/workspace.xml
+*.log
+public/build
+public/jsb-default
+public/logs
+npm-debug.log.*
+deploy.tar.gz
+
+dist.tar.gz
+.idea/*
+coverage/
+.nyc_output/
+
+# hack to use lcov analysis in webstorm
+.DS_Store
+karma.conf.js
+src/test/karma.js
+data/
+public/*.tar.gz
+public/build_result/
+*.nginx.conf
