@@ -21,8 +21,6 @@
     "typescript": "^3.0.1"
   },
   "dependencies": {
-    "apollo-server": "^2.1.0",
-    "graphql": "^14.0.2",
     "redis": "^2.8.0",
     "redis-lock": "^0.1.4"
   }
