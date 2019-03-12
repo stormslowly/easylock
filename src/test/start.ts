@@ -1,12 +1,17 @@
 import {withLock} from "../index";
+import {expect} from "chai";
 
 describe('basic use', () => {
 
 
   it('with default withLock', async function () {
 
-    await withLock('lockMe', async () => {
+    const h = await withLock('lockMe', async () => {
+      return 'hello'
     })
 
+    expect(h).to.equal('hello')
+
   });
+
 })

@@ -51,12 +51,11 @@ export function createLockContext(redisClient: RedisClient) {
     const unlock = await locker(key, timeOut)
 
     try {
-      await func()
+      return func()
     } catch (e) {
       console.error(e)
       throw e
-    }
-    finally {
+    } finally {
       unlock()
     }
   }
